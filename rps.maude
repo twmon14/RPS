@@ -1,0 +1,196 @@
+fmod SOUP{E :: TRIV} is
+    sort Soup{E} .
+    subsort E$Elt < Soup{E} .
+    op emp : -> Soup{E} [ctor] .
+    op _ _ : Soup{E} Soup{E} -> Soup{E} [ctor assoc comm id: emp].
+    op _\in_ : E$Elt Soup{E} -> Bool .
+    var X : E$Elt .
+    var S : Soup{E} .
+    eq X X = X . *** idempotency
+    eq X \in X S = true .
+    eq X \in S = false [owise] .
+endfm
+
+--- fmod PLAYER is
+---     sort Player .
+---     ops a b : -> Player [ctor] .
+--- endfm
+
+--- view Player from TRIV to PLAYER is
+---     sort Elt to Player .
+--- endv
+
+--- fmod PLAYER-SOUP is
+---     pr SOUP{Player} .
+--- endfm
+
+fmod CHOICE is
+    sort Choice .
+    ops r p s : -> Choice [ctor] .
+    op empt : -> Choice [ctor] .
+
+endfm
+
+view Choice from TRIV to CHOICE is
+    sort Elt to Choice .
+endv
+
+fmod CHOICE-SOUP is
+    pr SOUP{Choice} .
+endfm
+
+fmod RESULT is
+    sort Result .
+    ops -1 0 1 e : -> Result [ctor] .
+endfm
+
+view Result from TRIV to RESULT is
+    sort Elt to Result .
+endv
+
+fmod RESULT-SOUP is
+    pr SOUP{Result} .
+endfm
+
+fmod PAIR is
+    pr CHOICE .
+    sort Pair .
+    op p : Choice Choice -> Pair [ctor] .
+    op c1 : Pair -> Choice .
+    op c2 : Pair -> Choice .
+
+    vars C1 C2 : Choice .
+    op empt : -> Pair [ctor] .
+
+    eq c1(p(C1,C2)) = C1 .
+    eq c2(p(C1,C2)) = C2 .
+endfm
+
+view Pair from TRIV to PAIR is
+    sort Elt to Pair .
+endv
+
+fmod PAIR-SOUP is
+    pr SOUP{Pair} .
+endfm
+
+fmod OCOM is
+    pr PAIR .
+    pr RESULT .
+    pr CHOICE-SOUP .
+    pr PAIR-SOUP .
+    pr RESULT-SOUP .
+    sort OCom .
+
+    op newpair:_ : Pair -> OCom [ctor] .
+    op nw:_ : Soup{Pair} -> OCom [ctor] .
+    op result:_ : Result -> OCom [ctor] .
+    op rnw:_ : Soup{Result} -> OCom [ctor] .
+    op choices:_ : Soup{Choice} -> OCom [ctor] .
+endfm
+
+view OCom from TRIV to OCOM is
+    sort Elt to OCom .
+endv
+
+fmod OCOM-SOUP is
+    pr SOUP{OCom} .
+endfm
+
+fmod CONFIG is
+    pr OCOM-SOUP .
+    sort Config .
+    op {_} : Soup{OCom} -> Config [ctor] .
+    op init : -> Config .
+    eq init = {(newpair: empt) (nw: emp) 
+                (choices: (r p s)) (result: e)
+                (rnw: emp)} .
+endfm
+
+mod RPS is
+    inc CONFIG .
+
+    var NP : Pair .
+    var NW : Soup{Pair} .
+    vars V U : Result .
+    var RN : Soup{Result} .
+
+    rl [rr] :
+    {(newpair: NP) (nw: NW) (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(r,r)) (nw: (p(r,r) NW)) 
+    (result: 0)
+    (rnw: (0 RN)) (choices: (r p s))} .
+
+    rl [rp] :
+    {(newpair: NP) (nw: (p(r,r) NW)) (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(r,p)) (nw: (p(r,p) p(r,r) NW)) 
+    (result: -1)
+    (rnw: (-1 RN)) (choices: (r p s))} .
+
+    rl [rs] :
+    {(newpair: NP) (nw: (p(r,p) p(r,r) NW)) 
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(r,s)) (nw: (p(r,s) p(r,p) p(r,r) NW)) 
+    (result: 1)
+    (rnw: (1 RN)) (choices: (r p s))} .
+
+    rl [pr] :
+    {(newpair: NP) (nw: (p(r,s) p(r,p) p(r,r) NW))
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(p,r)) (nw: (p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: 1)
+    (rnw: (1 RN)) (choices: (r p s))} .
+
+    rl [pp] :
+    {(newpair: NP) (nw:(p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(p,p)) (nw: (p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: 0)
+    (rnw: (0 RN)) (choices: (r p s))} .
+
+    rl [ps] :
+    {(newpair: NP) (nw: (p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(p,s)) (nw: (p(p,s) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: -1)
+    (rnw: (-1 RN)) (choices: (r p s))} .
+
+    rl [sr] :
+    {(newpair: NP) (nw: (p(p,s) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(s,r)) (nw: (p(s,r) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: 1)
+    (rnw: (1 RN)) (choices: (r p s))} .
+
+    rl [sp] :
+    {(newpair: NP) (nw: (p(s,r) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(s,p)) (nw: (p(s,p) p(s,r) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: -1)
+    (rnw: (-1 RN)) (choices: (r p s))} .
+
+    rl [ss] :
+    {(newpair: NP) (nw: (p(s,p) p(s,r) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: U)
+    (rnw: RN) (choices: (r p s))}
+    =>
+    {(newpair: p(s,s)) (nw: (p(s,s) p(s,p) p(s,r) p(p,p) p(p,r) p(r,s) p(r,p) p(r,r) NW))
+    (result: 0)
+    (rnw: (0 RN)) (choices: (r p s))} .
+endm
