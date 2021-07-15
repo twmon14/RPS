@@ -3,7 +3,7 @@ view TermListView from TRIV to META-TERM is
 endv
 
 mod SEARCH is
-    pr NSPK .
+    pr RPS .
     pr META-UTILS .
     pr RANDOM .
 
