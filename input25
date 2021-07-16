@@ -1,29 +1,29 @@
 ###keys
-newpair nw result rnw
+newpair result rnw
 ###textDisplay
 newpair::::EXT
 newpair#0 newpair#1
 ###states
-(newpair: n(r, r) nw: n(r, r) result: 0 rnw: 0 ||
-(newpair: n(r, p) nw: (n(r, r) n(r, p)) result: -1 rnw: (-1 0) ||
-(newpair: n(r, s) nw: (n(r, r) n(r, p) n(r, s)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(r, s) nw: (n(r, r) n(r, p) n(r, s)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(r, p) nw: (n(r, r) n(r, p) n(r, s)) result: -1 rnw: (-1 0 1) ||
-(newpair: n(r, s) nw: (n(r, r) n(r, p) n(r, s)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(r, r) nw: (n(r, r) n(r, p) n(r, s)) result: 0 rnw: (-1 0 1) ||
-(newpair: n(r, r) nw: (n(r, r) n(r, p) n(r, s)) result: 0 rnw: (-1 0 1) ||
-(newpair: n(r, r) nw: (n(r, r) n(r, p) n(r, s)) result: 0 rnw: (-1 0 1) ||
-(newpair: n(r, s) nw: (n(r, r) n(r, p) n(r, s)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(p, r) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(r, p) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: -1 rnw: (-1 0 1) ||
-(newpair: n(r, p) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: -1 rnw: (-1 0 1) ||
-(newpair: n(r, p) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: -1 rnw: (-1 0 1) ||
-(newpair: n(p, r) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(r, s) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(p, r) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(r, s) nw: (n(r, r) n(r, p) n(r, s) n(p, r)) result: 1 rnw: (-1 0 1) ||
-(newpair: n(p, p) nw: (n(r, r) n(r, p) n(r, s) n(p, r) n(p, p)) result: 0 rnw: (-1 0 1) ||
-(newpair: n(r, p) nw: (n(r, r) n(r, p) n(r, s) n(p, r) n(p, p)) result: -1 rnw: (-1 0 1) ||
-(newpair: n(r, r) nw: (n(r, r) n(r, p) n(r, s) n(p, r) n(p, p)) result: 0 rnw: (-1 0 1) ||
-(newpair: n(p, s) nw: (n(r, r) n(r, p) n(r, s) n(p, r) n(p, p) n(p, s)) result: -1 rnw: (-1 0 1) ||
-(newpair: n(p, r) nw: (n(r, r) n(r, p) n(r, s) n(p, r) n(p, p) n(p, s)) result: 1 rnw: (-1 0 1)
+(newpair: n(r, r) result: 0 rnw: 0 ||
+(newpair: n(r, p) result: -1 rnw: (-1 0) ||
+(newpair: n(r, s) result: 1 rnw: (-1 0 1) ||
+(newpair: n(r, s) result: 1 rnw: (-1 0 1) ||
+(newpair: n(r, p) result: -1 rnw: (-1 0 1) ||
+(newpair: n(r, s) result: 1 rnw: (-1 0 1) ||
+(newpair: n(r, r) result: 0 rnw: (-1 0 1) ||
+(newpair: n(r, r) result: 0 rnw: (-1 0 1) ||
+(newpair: n(r, r) result: 0 rnw: (-1 0 1) ||
+(newpair: n(r, s) result: 1 rnw: (-1 0 1) ||
+(newpair: n(p, r) result: 1 rnw: (-1 0 1) ||
+(newpair: n(r, p) result: -1 rnw: (-1 0 1) ||
+(newpair: n(r, p) result: -1 rnw: (-1 0 1) ||
+(newpair: n(r, p) result: -1 rnw: (-1 0 1) ||
+(newpair: n(p, r) result: 1 rnw: (-1 0 1) ||
+(newpair: n(r, s) result: 1 rnw: (-1 0 1) ||
+(newpair: n(p, r) result: 1 rnw: (-1 0 1) ||
+(newpair: n(r, s) result: 1 rnw: (-1 0 1) ||
+(newpair: n(p, p) result: 0 rnw: (-1 0 1) ||
+(newpair: n(r, p) result: -1 rnw: (-1 0 1) ||
+(newpair: n(r, r) result: 0 rnw: (-1 0 1) ||
+(newpair: n(p, s) result: -1 rnw: (-1 0 1) ||
+(newpair: n(p, r) result: 1 rnw: (-1 0 1)
