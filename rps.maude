@@ -86,10 +86,10 @@ fmod OCOM is
     pr RESULT-SOUP .
     sort OCom .
 
-    op newpair:_ : Pair -> OCom [ctor] .
+    op pair:_ : Pair -> OCom [ctor] .
     op nw:_ : Soup{Pair} -> OCom [ctor] .
     op result:_ : Result -> OCom [ctor] .
-    op rnw:_ : Soup{Result} -> OCom [ctor] .
+    --- op rnw:_ : Soup{Result} -> OCom [ctor] .
     op choices:_ : Soup{Choice} -> OCom [ctor] .
 endfm
 
@@ -106,9 +106,8 @@ fmod CONFIG is
     sort Config .
     op {_} : Soup{OCom} -> Config [ctor] .
     op init : -> Config .
-    eq init = {(newpair: empt) (nw: emp) 
-                (choices: (r p s)) (result: e)
-                (rnw: emp)} .
+    eq init = {(pair: empt) (nw: emp) 
+                (choices: (r p s)) (result: e)} .
 endfm
 
 mod RPS is
@@ -117,84 +116,84 @@ mod RPS is
     var NP : Pair .
     var NW : Soup{Pair} .
     vars V U : Result .
-    var RN : Soup{Result} .
+    --- var RN : Soup{Result} .
 
     rl [rr] :
-    {(newpair: NP) (nw: NW) (result: U)
-    (rnw: RN) (choices: (r p s))}
+    {(pair: NP) (nw: NW) (result: U)
+     (choices: (r p s))}
     =>
-    {(newpair: n(r,r)) (nw: (n(r,r) NW)) 
+    {(pair: n(r,r)) (nw: (n(r,r) NW)) 
     (result: 0)
-    (rnw: (0 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [rp] :
-    {(newpair: NP) (nw: (n(r,r) NW)) (result: U)
-    (rnw: RN) (choices: (r p s))}
+    {(pair: NP) (nw: (n(r,r) NW)) (result: U)
+     (choices: (r p s))}
     =>
-    {(newpair: n(r,p)) (nw: (n(r,p) n(r,r) NW)) 
+    {(pair: n(r,p)) (nw: (n(r,p) n(r,r) NW)) 
     (result: -1)
-    (rnw: (-1 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [rs] :
-    {(newpair: NP) (nw: (n(r,p) n(r,r) NW)) 
+    {(pair: NP) (nw: (n(r,p) n(r,r) NW)) 
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(r,s)) (nw: (n(r,s) n(r,p) n(r,r) NW)) 
+    {(pair: n(r,s)) (nw: (n(r,s) n(r,p) n(r,r) NW)) 
     (result: 1)
-    (rnw: (1 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [pr] :
-    {(newpair: NP) (nw: (n(r,s) n(r,p) n(r,r) NW))
+    {(pair: NP) (nw: (n(r,s) n(r,p) n(r,r) NW))
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(p,r)) (nw: (n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: n(p,r)) (nw: (n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: 1)
-    (rnw: (1 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [pp] :
-    {(newpair: NP) (nw:(n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: NP) (nw:(n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(p,p)) (nw: (n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: n(p,p)) (nw: (n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: 0)
-    (rnw: (0 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [ps] :
-    {(newpair: NP) (nw: (n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: NP) (nw: (n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(p,s)) (nw: (n(p,s) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: n(p,s)) (nw: (n(p,s) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: -1)
-    (rnw: (-1 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [sr] :
-    {(newpair: NP) (nw: (n(p,s) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: NP) (nw: (n(p,s) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(s,r)) (nw: (n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: n(s,r)) (nw: (n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: 1)
-    (rnw: (1 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [sp] :
-    {(newpair: NP) (nw: (n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: NP) (nw: (n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(s,p)) (nw: (n(s,p) n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: n(s,p)) (nw: (n(s,p) n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: -1)
-    (rnw: (-1 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 
     rl [ss] :
-    {(newpair: NP) (nw: (n(s,p) n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: NP) (nw: (n(s,p) n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: U)
-    (rnw: RN) (choices: (r p s))}
+     (choices: (r p s))}
     =>
-    {(newpair: n(s,s)) (nw: (n(s,s) n(s,p) n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
+    {(pair: n(s,s)) (nw: (n(s,s) n(s,p) n(s,r) n(p,p) n(p,r) n(r,s) n(r,p) n(r,r) NW))
     (result: 0)
-    (rnw: (0 RN)) (choices: (r p s))} .
+     (choices: (r p s))} .
 endm

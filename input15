@@ -1,0 +1,21 @@
+###keys
+pair result
+###textDisplay
+pair::::EXT
+pair#0 pair#1
+###states
+(pair: n(r, r) result: 0) ||
+(pair: n(r, r) result: 0) ||
+(pair: n(r, p) result: -1) ||
+(pair: n(r, r) result: 0) ||
+(pair: n(r, s) result: 1) ||
+(pair: n(r, p) result: -1) ||
+(pair: n(p, r) result: 1) ||
+(pair: n(r, s) result: 1) ||
+(pair: n(p, r) result: 1) ||
+(pair: n(r, s) result: 1) ||
+(pair: n(p, p) result: 0) ||
+(pair: n(r, p) result: -1) ||
+(pair: n(r, r) result: 0) ||
+(pair: n(p, s) result: -1) ||
+(pair: n(p, r) result: 1)

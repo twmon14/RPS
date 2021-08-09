@@ -10,9 +10,8 @@ mod DEMO is
     subsorts Config < ListConfig .
     
     op init : -> Config .
-    eq init ={(newpair: empt) (nw: emp) 
-                (choices: (r p s)) (result: e)
-                (rnw: emp)} .
+    eq init = {(pair: empt) (nw: emp) 
+                (choices: (r p s)) (result: e)} .
 
     op nil : -> ListConfig .
     op _||_ : Config ListConfig -> ListConfig .
@@ -26,4 +25,4 @@ mod DEMO is
     eq downTermSearch((T,TL)) =  downTerm(T, nil) || downTermSearch(TL) .
 endm
 
-reduce in DEMO : downTermSearch(genSeq('RPS, upTerm(init), 25)) .
+reduce in DEMO : downTermSearch(genSeq('RPS, upTerm(init), 15)) .
